@@ -5,21 +5,26 @@ import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Tarefa {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name="TAREFA")
+public class Tarefa extends AbstractEntity<Long> {
 	
-	private Long id;
+	@Column(name="nome", nullable=false, unique=true, length=60)
 	private String nome;
 	
+	@Column(name="data_entrega", nullable=false, columnDefinition="DATE")
 	@DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
 	private LocalDate dataEntrega;
+	
+	@Column(name="responsavel", nullable=false, length=60)
 	private String responsavel;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -38,28 +43,7 @@ public class Tarefa {
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(dataEntrega, id, nome, responsavel);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tarefa other = (Tarefa) obj;
-		return Objects.equals(dataEntrega, other.dataEntrega) && Objects.equals(id, other.id)
-				&& Objects.equals(nome, other.nome) && Objects.equals(responsavel, other.responsavel);
-	}
-	
-	@Override
-	public String toString() {
-		return "Tarefa [id=" + id + ", nome=" + nome + ", dataEntrega=" + dataEntrega + ", responsavel=" + responsavel
-				+ "]";
-	}
 
+	
 	
 }
